@@ -1,5 +1,3 @@
-import { ReactChildrenInterface } from "../entities";
-
 export default function Card({ children }: ReactChildrenInterface) {
   return (
     <>

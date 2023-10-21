@@ -1,4 +1,4 @@
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeHook";
 
 export default function ThemeSwitch() {
   const [theme, updateTheme] = useTheme();

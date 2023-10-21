@@ -1,4 +1,3 @@
-import { Letter, LettersBoxInterface } from "../entities";
 import Card from "./Card";
 
 const firstWord: Array<Letter> = [
@@ -60,7 +59,7 @@ export default function Instructions() {
   const DummyLetterBox = ({ word }: LettersBoxInterface) => {
     return (
       <div className="flex justify-between w-[420px]">
-        {word.map((letter, key) => (
+        {word.map((letter: Letter, key: number) => (
           <div
             key={key}
             className={`w-[76px] h-[76px] 
