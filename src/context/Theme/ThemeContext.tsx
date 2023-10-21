@@ -1,4 +1,6 @@
 import { createContext, useState } from "react";
+import { ThemeContextInterface } from "./types";
+import { ReactChildrenInterface } from "../../types";
 
 const initialState = {
   theme: "light",

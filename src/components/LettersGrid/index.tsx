@@ -1,6 +1,6 @@
 
-import { useWords } from '../hooks/WordsHook';
-import LettersBox from './LettersBox'
+import { useWords } from '../../hooks/WordsHook';
+import LettersBox from '../LettersBox'
 
 
 

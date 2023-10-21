@@ -1,4 +1,6 @@
 import { Reducer, createContext, useReducer } from "react";
+import { WordsActionsInterface, WordsContextInterface, WordsStateType } from "./types";
+import { ReactChildrenInterface } from "../../types";
 
 const initialState = {
     words: [],
