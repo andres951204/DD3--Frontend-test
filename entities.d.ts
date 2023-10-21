@@ -7,7 +7,7 @@ type Letter = {
   state?: "in-position" | "in-word" | "not-in-word" | "empty";
 };
 
-type UsedWordsStateType = Array<Array<Letter>>
+type WordsStateType = Array<Array<Letter>>
 
 interface LettersBoxInterface {
   word: Array<Letter>
@@ -18,7 +18,18 @@ interface ThemeContextInterface {
   updateTheme: Dispatch<SetStateAction<string>>;
 }
 
-interface UsedWordsActionInterface {
-  payload: UsedWordsInterface,
+interface WordsContextInterface {
+  words: WordsStateType,
+  updateWords: Dispatch<SetStateAction<Letter>>;
+}
+
+interface WordsActionsInterface {
+  payload: LettersBoxInterface,
   type: 'begin' | 'add'
+}
+
+interface KeyboardKeyInterface {
+  character: string | JSX.Element,
+  wide?: boolean,
+  onClick?: ReactNode
 }

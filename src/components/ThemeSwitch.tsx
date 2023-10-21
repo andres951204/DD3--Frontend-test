@@ -1,7 +1,7 @@
-import { useTheme } from "../context/ThemeHook";
+import { useTheme } from "../hooks/ThemeHook";
 
 export default function ThemeSwitch() {
-  const [theme, updateTheme] = useTheme();
+  const { theme, updateTheme } = useTheme();
 
   const changeActiveTheme = () => {
     updateTheme(theme === "light" ? "dark" : "light");
@@ -11,8 +11,8 @@ export default function ThemeSwitch() {
     <>
       <div className="w-16 h-8 relative">
         <img src="switch-body-light.png" alt="Contenedor tema" />
-        <img src="switch-button-light.png" onClick={() => changeActiveTheme()} 
-        className="absolute top-0.5 right-2 cursor-pointer" alt="Cambiar tema" />
+        <img src="switch-button-light.png" onClick={() => changeActiveTheme()}
+          className="absolute top-0.5 right-2 cursor-pointer" alt="Cambiar tema" />
       </div>
     </>
   );

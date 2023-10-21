@@ -55,7 +55,7 @@ const thirdWord: Array<Letter> = [
   },
 ];
 
-export default function Instructions() {
+export default function Instructions({ show }: { show: boolean }) {
   const DummyLetterBox = ({ word }: LettersBoxInterface) => {
     return (
       <div className="flex justify-between w-[420px]">
