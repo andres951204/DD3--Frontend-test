@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface ReactChildrenInterface {
   children: JSX.Element | Array<JSX.Element>;
 }
@@ -9,4 +11,9 @@ export type Letter = {
 
 export interface LettersBoxInterface {
   word: Array<Letter>;
+}
+
+export interface ThemeContextInterface {
+  theme: string,
+  updateTheme: Dispatch<SetStateAction<string>>;
 }

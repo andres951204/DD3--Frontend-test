@@ -1,10 +1,13 @@
 import Header from "./components/Header";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
   return (
-    <div className="flex flex-col justify-center items-center pt-8 select-none">
-      <Header/>
-    </div>
+    <ThemeProvider>
+      <div className="flex flex-col justify-center items-center pt-8 select-none">
+        <Header />
+      </div>
+    </ThemeProvider>
   );
 }
 
