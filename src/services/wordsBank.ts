@@ -2,12 +2,20 @@ import wordsList from "../words.txt";
 import { WordsBankInterface } from "./types";
 
 export const getWordsBank = async (): Promise<WordsBankInterface> => {
-  let wordsSet;
+  const wordsArr = [""];
   await fetch(wordsList)
     .then((response) => response.text())
     .then((result) => {
-      const wordsArr = result.split("\n").filter((word) => word.length === 5)
-      wordsSet = new Set(wordsArr);
+      result.split("\n").forEach((word) => {
+        if (word.length === 5) {
+          wordsArr.push(
+            word
+              .normalize("NFD")
+              .replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2")
+              .normalize()
+          );
+        }
+      });
     });
-  return { wordsSet };
+  return { wordsArr };
 };

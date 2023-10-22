@@ -20,7 +20,7 @@ export default function Keyboard({ setWinner }: KeyboardInterface) {
       return setWinner(true);
     }
 
-    if (wordsBank.has(currentGuess)) {
+    if (wordsBank.includes(currentGuess)) {
       setCurrentPosition({ row: currentPosition.row + 1, letterPosition: 0 });
     } else {
       alert("Palabra no encontrada");

@@ -1,3 +1,3 @@
 export interface WordsBankInterface {
-  wordsSet: Set<string>| undefined;
+    wordsArr: Array<string> | undefined;
 }
