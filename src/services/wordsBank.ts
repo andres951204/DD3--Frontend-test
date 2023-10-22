@@ -1,6 +1,7 @@
 import wordsList from "../words.txt";
+import { WordsBankInterface } from "./types";
 
-export const getWordsBank = async () => {
+export const getWordsBank = async (): Promise<WordsBankInterface> => {
   let wordsSet;
   await fetch(wordsList)
     .then((response) => response.text())

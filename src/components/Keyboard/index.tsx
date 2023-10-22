@@ -15,7 +15,7 @@ export default function Keyboard({ setWinner }: KeyboardInterface) {
 
     const currentGuess = board[currentPosition.row].join("");
 
-    if (currentGuess === currentWord) {
+    if (currentGuess  === currentWord) {
       alert("Winner");
       return setWinner(true);
     }

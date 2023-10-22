@@ -36,7 +36,7 @@ export const BoardContext = createContext(boardContextInitialState);
 export const BoardProvider = ({ children }: ReactChildrenInterface) => {
   const [board, setBoard] = useState(boardInitialState);
   const [currentPosition, setCurrentPosition] = useState(currentPositionInitialState);
-  const [currentWord] = useState("asado");
+  const [currentWord, setCurrentWord] = useState("");
   const [wordsBank, setWordsBank] = useState(new Set([""]));
   const [notInWordLetters, setNotInWordLetters] = useState([""]);
   const [inWordLetters, setInWordLetters] = useState([""]);
@@ -45,6 +45,7 @@ export const BoardProvider = ({ children }: ReactChildrenInterface) => {
   useEffect(() => {
     getWordsBank().then((words) => {
       if (words.wordsSet) {
+        setCurrentWord(Array.from(words.wordsSet)[Math.floor(Math.random() * words.wordsSet.size)]);
         setWordsBank(words.wordsSet);
       }
     });
