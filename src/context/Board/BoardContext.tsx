@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { ReactChildrenInterface } from "../../types";
 import { BoardContextInterface } from "./types";
+import { getWordsBank } from "../../services/wordsBank";
 
 const boardInitialState = [
   ["", "", "", "", ""],
@@ -20,6 +21,8 @@ const boardContextInitialState = {
   setBoard: () => {},
   currentPosition: currentPositionInitialState,
   setCurrentPosition: () => {},
+  currentWord: "",
+  wordsBank: new Set([""]),
 };
 
 export const BoardContext = createContext<BoardContextInterface>(boardContextInitialState);
@@ -27,6 +30,16 @@ export const BoardContext = createContext<BoardContextInterface>(boardContextIni
 export const BoardProvider = ({ children }: ReactChildrenInterface) => {
   const [board, setBoard] = useState(boardInitialState);
   const [currentPosition, setCurrentPosition] = useState(currentPositionInitialState);
+  const [currentWord] = useState("asedo");
+  const [wordsBank, setWordsBank] = useState(new Set([""]));
 
-  return <BoardContext.Provider value={{ board, setBoard, currentPosition, setCurrentPosition }}>{children}</BoardContext.Provider>;
+  useEffect(() => {
+  getWordsBank().then((words) => {
+      if (words.wordsSet) {
+        setWordsBank(words.wordsSet);
+      }
+    });
+  }, []);
+
+  return <BoardContext.Provider value={{ board, setBoard, currentPosition, setCurrentPosition, currentWord, wordsBank }}>{children}</BoardContext.Provider>;
 };

@@ -11,4 +11,6 @@ export interface BoardContextInterface {
   setBoard: Dispatch<SetStateAction<BoardState>>;
   currentPosition: CurrentPositionState;
   setCurrentPosition: Dispatch<SetStateAction<CurrentPositionState>>;
+  currentWord: string;
+  wordsBank: Set<string>;
 }
