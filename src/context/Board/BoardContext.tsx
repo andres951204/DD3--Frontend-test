@@ -19,6 +19,7 @@ const currentPositionInitialState = {
 const boardContextInitialState: BoardContextInterface = {
   board: boardInitialState,
   setBoard: () => {},
+  boardInitialState,
   currentPosition: currentPositionInitialState,
   setCurrentPosition: () => {},
   currentWord: "",
@@ -56,6 +57,7 @@ export const BoardProvider = ({ children }: ReactChildrenInterface) => {
       value={{
         board,
         setBoard,
+        boardInitialState,
         currentPosition,
         setCurrentPosition,
         currentWord,

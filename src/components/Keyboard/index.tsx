@@ -1,29 +1,34 @@
 import { useContext, useEffect, useCallback } from "react";
 import Key from "../Key";
 import { BoardContext } from "../../context/Board/BoardContext";
-import { KeyboardInterface } from "./types";
+import { UserContext } from "../../context/User/UserContext";
 
 const firstRow = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
 const secondRow = ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ñ"];
 const thirdRow = ["z", "x", "c", "v", "b", "n", "m"];
 
-export default function Keyboard({ setWinner }: KeyboardInterface) {
+export default function Keyboard() {
   const { board, setBoard, currentPosition, setCurrentPosition, wordsBank, currentWord, inWordLetters, inPositionLetters, notInWordLetters } = useContext(BoardContext);
+  const { setWinner, setGameOver, victories, games, setVictories, setGames, setUpdateToken, setShowStatistics } = useContext(UserContext);
 
   const handleSubmit = () => {
     if (currentPosition.letterPosition !== 5) return;
 
     const currentGuess = board[currentPosition.row].join("");
 
-    if (currentGuess  === currentWord) {
-      alert("Winner");
-      return setWinner(true);
-    }
-
     if (wordsBank.includes(currentGuess)) {
       setCurrentPosition({ row: currentPosition.row + 1, letterPosition: 0 });
     } else {
       alert("Palabra no encontrada");
+    }
+
+    if (currentGuess === currentWord) {
+      setWinner(true);
+      setGameOver(true);
+      setVictories(victories + 1);
+      setGames(games + 1);
+      setShowStatistics(true);
+      setUpdateToken(true);
     }
   };
 
@@ -43,7 +48,7 @@ export default function Keyboard({ setWinner }: KeyboardInterface) {
   };
 
   const handleLetterPress = (kValue: string) => {
-    const regex = new RegExp(/^[A-z]{1}$/);
+    const regex = new RegExp(/^[A-z-ñ]{1}$/);
     if (!regex.test(kValue)) return;
     handleLetterClick(kValue);
   };
@@ -73,6 +78,7 @@ export default function Keyboard({ setWinner }: KeyboardInterface) {
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
+    console.log(currentWord);
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
@@ -84,14 +90,28 @@ export default function Keyboard({ setWinner }: KeyboardInterface) {
         <div className="flex w-full max-w-xl pl-8">
           {firstRow.map((letter, key) => (
             <div key={key}>
-              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} inPosition={inPositionLetters.includes(letter)} inWord={inWordLetters.includes(letter)} notInWord={notInWordLetters.includes(letter)} />
+              <Key
+                value={letter}
+                keyValue={letter}
+                handleKeyClick={handleKeyClick}
+                inPosition={inPositionLetters.includes(letter)}
+                inWord={inWordLetters.includes(letter)}
+                notInWord={notInWordLetters.includes(letter)}
+              />
             </div>
           ))}
         </div>
         <div className="flex w-full max-w-xl mt-2 pl-12">
           {secondRow.map((letter, key) => (
             <div key={key}>
-              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} inPosition={inPositionLetters.includes(letter)} inWord={inWordLetters.includes(letter)} notInWord={notInWordLetters.includes(letter)} />
+              <Key
+                value={letter}
+                keyValue={letter}
+                handleKeyClick={handleKeyClick}
+                inPosition={inPositionLetters.includes(letter)}
+                inWord={inWordLetters.includes(letter)}
+                notInWord={notInWordLetters.includes(letter)}
+              />
             </div>
           ))}
         </div>
@@ -99,7 +119,14 @@ export default function Keyboard({ setWinner }: KeyboardInterface) {
           <Key value={"ENTER"} wide keyValue={"Enter"} handleKeyClick={handleKeyClick} />
           {thirdRow.map((letter, key) => (
             <div key={key}>
-              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} inPosition={inPositionLetters.includes(letter)} inWord={inWordLetters.includes(letter)} notInWord={notInWordLetters.includes(letter)} />
+              <Key
+                value={letter}
+                keyValue={letter}
+                handleKeyClick={handleKeyClick}
+                inPosition={inPositionLetters.includes(letter)}
+                inWord={inWordLetters.includes(letter)}
+                notInWord={notInWordLetters.includes(letter)}
+              />
             </div>
           ))}
           <Key value={<img src="/delete-icon.png" />} keyValue={"Delete"} wide handleKeyClick={handleKeyClick} />

@@ -1,14 +1,12 @@
-import { useRef, useState } from "react";
+import { useContext } from "react";
 import Card from "../Card";
-import { StatisticsInterface } from "./types";
+import { UserContext } from "../../context/User/UserContext";
+import { BoardContext } from "../../context/Board/BoardContext";
+import Timer from "../Timer";
 
-export default function Statistics({ showStatistics, setShowStatistics }: StatisticsInterface) {
-  const [games, setGames] = useState(0);
-  const [victories, setVictories] = useState(0);
-  const [lastWord] = useState('perro')
-  const [gameOver,setGameOver] = useState(false)
-  const [winner] = useState(false)
-  const timer = useRef("04:10");
+export default function Statistics() {
+  const { games, victories, gameOver, winner, showStatistics, setShowStatistics } = useContext(UserContext)
+  const { currentWord } = useContext(BoardContext)
 
   return (
     <>
@@ -25,12 +23,14 @@ export default function Statistics({ showStatistics, setShowStatistics }: Statis
                 <div className="text-4xl font-extrabold">{victories}</div>
                 <div className="text-xl mt-4">Victorias</div>
               </div>
-              { gameOver && !winner && <div className=" col-span-3 text-center text-xl" >
-                La palabra era: <span className="font-bold uppercase">{lastWord}</span>
+              {gameOver && !winner && <div className=" col-span-3 text-center text-xl" >
+                La palabra era: <span className="font-bold uppercase">{currentWord}</span>
               </div>}
-              { gameOver && <div className="flex flex-col items-center col-span-3">
+              {gameOver && <div className="flex flex-col items-center col-span-3">
                 <div className="text-xl">SIGUIENTE PALABRA</div>
-                <div className="text-2xl mt-4 font-extrabold">{timer.current}</div>
+                <div className="text-2xl mt-4 font-extrabold">
+                  {<Timer />}
+                </div>
               </div>}
               <div className="flex justify-center items-center col-span-3">
                 <button

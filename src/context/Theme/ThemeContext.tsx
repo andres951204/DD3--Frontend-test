@@ -2,12 +2,12 @@ import { createContext, useState } from "react";
 import { ThemeContextInterface } from "./types";
 import { ReactChildrenInterface } from "../../types";
 
-const initialState = {
+const initialState: ThemeContextInterface = {
   theme: "light",
-  updateTheme: () => {},
+  updateTheme: () => { },
 };
 
-export const ThemeContext = createContext<ThemeContextInterface>(initialState);
+export const ThemeContext = createContext(initialState);
 
 export const ThemeProvider = ({ children }: ReactChildrenInterface) => {
   const [theme, setTheme] = useState("light");

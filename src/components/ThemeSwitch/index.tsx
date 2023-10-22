@@ -1,8 +1,9 @@
-import { useTheme } from "../../hooks/ThemeHook";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 
 export default function ThemeSwitch() {
-  const { theme, updateTheme } = useTheme();
-
+  const { theme, updateTheme } = useContext(ThemeContext)
+  
   const changeActiveTheme = () => {
     updateTheme(theme === "light" ? "dark" : "light");
   };
