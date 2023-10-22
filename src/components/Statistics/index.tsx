@@ -3,8 +3,11 @@ import Card from "../Card";
 import { StatisticsInterface } from "./types";
 
 export default function Statistics({ showStatistics, setShowStatistics }: StatisticsInterface) {
-  const [played, setPlayed] = useState(0);
+  const [games, setGames] = useState(0);
   const [victories, setVictories] = useState(0);
+  const [lastWord] = useState('perro')
+  const [gameOver,setGameOver] = useState(false)
+  const [winner] = useState(false)
   const timer = useRef("04:10");
 
   return (
@@ -12,20 +15,23 @@ export default function Statistics({ showStatistics, setShowStatistics }: Statis
       <div className={`${showStatistics ? "block" : "hidden"}`}>
         <div className={`absolute -translate-x-2/4 -translate-y-2/4 top-2/4 left-2/4 z-20`}>
           <Card>
-            <div className="grid grid-rows-4 grid-cols-3 items-center gap-4">
+            <div className="grid grid-rows-3 grid-cols-3 items-center gap-4 auto-rows-auto">
               <h2 className="font-extrabold text-4xl col-start-1 col-end-4 text-center">Estadísticas</h2>
               <div className="flex flex-col items-center col-start-1 ">
-                <div className="text-4xl font-extrabold">{played}</div>
+                <div className="text-4xl font-extrabold">{games}</div>
                 <div className="text-xl mt-4">Jugadas</div>
               </div>
               <div className="flex flex-col items-center col-start-3">
                 <div className="text-4xl font-extrabold">{victories}</div>
                 <div className="text-xl mt-4">Victorias</div>
               </div>
-              <div className="flex flex-col items-center col-span-3">
+              { gameOver && !winner && <div className=" col-span-3 text-center text-xl" >
+                La palabra era: <span className="font-bold uppercase">{lastWord}</span>
+              </div>}
+              { gameOver && <div className="flex flex-col items-center col-span-3">
                 <div className="text-xl">SIGUIENTE PALABRA</div>
                 <div className="text-2xl mt-4 font-extrabold">{timer.current}</div>
-              </div>
+              </div>}
               <div className="flex justify-center items-center col-span-3">
                 <button
                   type="button"

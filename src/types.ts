@@ -7,3 +7,4 @@ export type Letter = {
   character: string;
   state?: "in-position" | "in-word" | "not-in-word" | "empty";
 };
+

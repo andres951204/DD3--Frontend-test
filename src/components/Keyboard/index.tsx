@@ -3,26 +3,27 @@ import Key from "../Key";
 import { BoardContext } from "../../context/Board/BoardContext";
 import { KeyboardInterface } from "./types";
 
-const firstRow = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
-const secondRow = ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ"];
-const thirdRow = ["Z", "X", "C", "V", "B", "N", "M"];
+const firstRow = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
+const secondRow = ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ñ"];
+const thirdRow = ["z", "x", "c", "v", "b", "n", "m"];
 
-export default function Keyboard({setWinner}: KeyboardInterface) {
-  const { board, setBoard, currentPosition, setCurrentPosition, wordsBank, currentWord } = useContext(BoardContext);
+export default function Keyboard({ setWinner }: KeyboardInterface) {
+  const { board, setBoard, currentPosition, setCurrentPosition, wordsBank, currentWord, inWordLetters, inPositionLetters, notInWordLetters } = useContext(BoardContext);
 
   const handleSubmit = () => {
     if (currentPosition.letterPosition !== 5) return;
 
     const currentGuess = board[currentPosition.row].join("");
 
-    if(currentGuess === currentWord){
-      return setWinner(true)
+    if (currentGuess === currentWord) {
+      alert("Winner");
+      return setWinner(true);
     }
 
     if (wordsBank.has(currentGuess)) {
       setCurrentPosition({ row: currentPosition.row + 1, letterPosition: 0 });
-    } else{
-      alert('Palabra no encontrada')
+    } else {
+      alert("Palabra no encontrada");
     }
   };
 
@@ -64,7 +65,7 @@ export default function Keyboard({setWinner}: KeyboardInterface) {
       } else if (e.key === "Backspace") {
         handleDelete();
       } else if (currentPosition.letterPosition < 5 && currentPosition.row < 5) {
-        handleLetterPress(e.key);
+        handleLetterPress(e.key.toLocaleLowerCase());
       }
     },
     [currentPosition.letterPosition, currentPosition.row]
@@ -83,14 +84,14 @@ export default function Keyboard({setWinner}: KeyboardInterface) {
         <div className="flex w-full max-w-xl pl-8">
           {firstRow.map((letter, key) => (
             <div key={key}>
-              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} />
+              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} inPosition={inPositionLetters.includes(letter)} inWord={inWordLetters.includes(letter)} notInWord={notInWordLetters.includes(letter)} />
             </div>
           ))}
         </div>
         <div className="flex w-full max-w-xl mt-2 pl-12">
           {secondRow.map((letter, key) => (
             <div key={key}>
-              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} />
+              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} inPosition={inPositionLetters.includes(letter)} inWord={inWordLetters.includes(letter)} notInWord={notInWordLetters.includes(letter)} />
             </div>
           ))}
         </div>
@@ -98,7 +99,7 @@ export default function Keyboard({setWinner}: KeyboardInterface) {
           <Key value={"ENTER"} wide keyValue={"Enter"} handleKeyClick={handleKeyClick} />
           {thirdRow.map((letter, key) => (
             <div key={key}>
-              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} />
+              <Key value={letter} keyValue={letter} handleKeyClick={handleKeyClick} inPosition={inPositionLetters.includes(letter)} inWord={inWordLetters.includes(letter)} notInWord={notInWordLetters.includes(letter)} />
             </div>
           ))}
           <Key value={<img src="/delete-icon.png" />} keyValue={"Delete"} wide handleKeyClick={handleKeyClick} />
