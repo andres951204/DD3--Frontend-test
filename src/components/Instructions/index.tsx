@@ -67,7 +67,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
             className={`w-[50px] h-[50px] 
             ${letter.state ? `bg-letter-box-${letter.state}` : "border border-black"}
             cursor-pointer rounded-md flex justify-center 
-            items-center font-extrabold text-4xl`}
+            items-center font-extrabold text-2xl`}
           >
             {letter.character}
           </div>
@@ -109,7 +109,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
           <p className="mt-6 text-center">¡Una palabra nueva cada 5 minutos!</p>
           <button
             type="button"
-            onClick={ () => setShowInstructions(!showInstructions)}
+            onClick={() => setShowInstructions(!showInstructions)}
             className="bg-letter-box-in-position max-w-xs w-64 h-12 
         text-white rounded-md font-extrabold text-3xl self-center mt-9 ease-in duration-75 hover:scale-105 "
           >
@@ -117,9 +117,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
           </button>
         </Card>
       </div>
-      <div className="absolute top-0 left-0 opacity-80 bg-white h-screen w-screen z-10">
-
-      </div>
+      <div className="absolute top-0 left-0 opacity-80 bg-white h-screen w-screen z-10"></div>
     </div>
   );
 }
