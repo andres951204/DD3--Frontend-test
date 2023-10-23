@@ -5,3 +5,9 @@
 html {
   font-family: "Roboto", sans-serif;
 }
+
+@media screen and (min-width: 0) and (max-width: 424px) {
+  html {
+    font-size: 14px;
+  }
+}

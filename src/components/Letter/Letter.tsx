@@ -1,7 +1,7 @@
 import { LetterInterface } from "./type";
-import { BoardContext } from "../../../context/Board/BoardContext";
+import { BoardContext } from "../../context/Board/BoardContext";
 import { useContext, useEffect } from "react";
-import { ThemeContext } from "../../../context/Theme/ThemeContext";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 
 export default function Letter({ letterPosition, row }: LetterInterface) {
   const { board, currentWord, currentPosition, inWordLetters, notInWordLetters, setInWordLetters, setInPositionLetters, setNotInWordLetters } = useContext(BoardContext);
@@ -11,7 +11,7 @@ export default function Letter({ letterPosition, row }: LetterInterface) {
   const inPosition = letter === currentWord[letterPosition];
   const inWord = !inPosition && letter !== "" && currentWord.includes(letter);
 
-  let bgColor = ''
+  let bgColor = "";
   if (currentPosition.row > row) {
     bgColor = inPosition ? "bg-letter-box-in-position" : inWord ? "bg-letter-box-in-word" : "bg-letter-box-not-in-word";
   } else {
@@ -32,6 +32,11 @@ export default function Letter({ letterPosition, row }: LetterInterface) {
   }, [currentPosition.row]);
 
   return (
-    <div className={`w-[76px] h-[76px] transition-all divide-purple-50 mr-3 ${bgColor} text-white capitalize bg-letter-box-empty rounded-md flex justify-center items-center font-extrabold text-4xl`}>{letter}</div>
+    <div
+      className={`max-w-[76px] max-h-[76px] col-start-${letterPosition + 1} w-full h-full transition-all ${bgColor} text-white capitalize 
+    rounded-md flex justify-center items-center font-extrabold text-4xl`}
+    >
+      {letter}
+    </div>
   );
 }

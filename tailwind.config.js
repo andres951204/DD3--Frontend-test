@@ -25,6 +25,9 @@ export default {
           components: "#2B3041"
         }
       },
+      screens:{
+        xs: '425px'
+      }
     },
   },
   plugins: [],
@@ -33,6 +36,7 @@ export default {
     "bg-letter-box-in-word",
     "bg-letter-box-not-in-word",
     "bg-letter-box-empty",
+    "bg-letter-box-dark-empty",
     "bg-keyboard-in-position",
     "bg-keyboard-in-word",
     "bg-keyboard-not-in-word",

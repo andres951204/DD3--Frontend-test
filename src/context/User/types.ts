@@ -13,6 +13,8 @@ export interface UserContextInterface {
     setGameOver: Dispatch<SetStateAction<boolean>>,
     showStatistics: boolean,
     setShowStatistics: Dispatch<SetStateAction<boolean>>,
+    showInstructions: boolean,
+    setShowInstructions: Dispatch<SetStateAction<boolean>>,
     setUpdateToken: Dispatch<SetStateAction<{
         update: boolean,
         lastWord: string

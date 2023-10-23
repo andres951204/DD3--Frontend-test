@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { Letter } from "../../types";
 import Card from "../Card";
-import { DummyLettersBoxInterface, InstructionsInterface } from "./types";
+import { DummyLettersBoxInterface } from "./types";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
+import { UserContext } from "../../context/User/UserContext";
 
 const firstWord: Array<Letter> = [
   {
@@ -59,7 +60,8 @@ const thirdWord: Array<Letter> = [
   },
 ];
 
-export default function Instructions({ showInstructions, setShowInstructions }: InstructionsInterface) {
+export default function Instructions() {
+  const { showInstructions, setShowInstructions } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
 
   const DummyLetterBox = ({ word }: DummyLettersBoxInterface) => {
@@ -69,7 +71,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
           <div
             key={key}
             className={`w-[50px] h-[50px] 
-            ${letter.state ? `bg-letter-box-${letter.state}` :  theme === 'light' ? "border border-black" : "border border-white"}
+            ${letter.state ? `bg-letter-box-${letter.state}` : theme === "light" ? "border border-black" : "border border-white"}
             cursor-pointer rounded-md flex justify-center 
             items-center font-extrabold text-2xl`}
           >
@@ -121,7 +123,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
           </button>
         </Card>
       </div>
-      <div className={`absolute top-0 left-0 opacity-80 ${theme === 'light' ? 'bg-white' : 'bg-dark-palette-main'} h-screen w-screen z-10`}></div>
+      <div className={`absolute top-0 left-0 opacity-80 ${theme === "light" ? "bg-white" : "bg-dark-palette-main"} h-screen w-screen z-10`}></div>
     </div>
   );
 }

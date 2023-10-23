@@ -17,10 +17,12 @@ const initialState: UserContextInterface = {
   setGameOver: () => {},
   showStatistics: false,
   setShowStatistics: () => {},
+  showInstructions: false,
+  setShowInstructions: () => {},
   setUpdateToken: () => ({ update: false, lastWord: "" }),
   resetGame: () => {},
   lastWord: "",
-  setLastWord: () => {}
+  setLastWord: () => {},
 };
 
 export const UserContext = createContext(initialState);
@@ -33,6 +35,7 @@ export const UserProvider = ({ children }: ReactChildrenInterface) => {
   const [gameOver, setGameOver] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
   const [lastWord, setLastWord] = useState("");
+  const [showInstructions,setShowInstructions] = useState(true)
   const [updateToken, setUpdateToken] = useState({
     update: false,
     lastWord: "",
@@ -49,7 +52,7 @@ export const UserProvider = ({ children }: ReactChildrenInterface) => {
         lastWord: updateToken.lastWord,
       };
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
-      setUpdateToken({ update: false, lastWord: '' });
+      setUpdateToken({ update: false, lastWord: "" });
     }
   }, [updateToken.update]);
 
@@ -63,6 +66,7 @@ export const UserProvider = ({ children }: ReactChildrenInterface) => {
       setNextWordTime(token.nextWordTime);
       setWinner(token.winner);
       setLastWord(token.lastWord);
+      setShowInstructions(false)
       if (token.gameOver) {
         setShowStatistics(true);
       }
@@ -89,10 +93,12 @@ export const UserProvider = ({ children }: ReactChildrenInterface) => {
         setGameOver,
         showStatistics,
         setShowStatistics,
+        showInstructions,
+        setShowInstructions,
         setUpdateToken,
         resetGame,
         lastWord,
-        setLastWord
+        setLastWord,
       }}
     >
       {children}

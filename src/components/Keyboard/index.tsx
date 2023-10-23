@@ -104,13 +104,13 @@ export default function Keyboard() {
     };
   }, [handleKeyPress]);
 
-  const deleteIconLight = 'delete-icon-light.png'
-  const deleteIconDark = 'delete-icon-dark.png'
+  const deleteIconLight = "delete-icon-light.png";
+  const deleteIconDark = "delete-icon-dark.png";
 
   return (
-    <div className={`flex justify-center mt-14 ${theme === "light" ? "bg-gray-100" : "bg-dark-palette-components"} pl-5 pt-8 pb-9 rounded-2xl w-full max-w-[638px]`}>
+    <div className={`flex justify-center p-2 mt-8  ${theme === "light" ? "bg-gray-100" : "bg-dark-palette-components"} rounded-2xl sm:pl-5 sm:pt-8 sm:mt-14 sm:pb-9  sm:w-full sm:max-w-[638px]`}>
       <div>
-        <div className="flex w-full max-w-xl pl-8">
+        <div className="flex sm:justify-start justify-center w-full max-w-xl sm:pl-8">
           {firstRow.map((letter, key) => (
             <div key={key}>
               <Key
@@ -124,7 +124,7 @@ export default function Keyboard() {
             </div>
           ))}
         </div>
-        <div className="flex w-full max-w-xl mt-2 pl-12">
+        <div className="flex w-full max-w-xl sm:mt-2 mt-1 sm:pl-12 sm:justify-start justify-center">
           {secondRow.map((letter, key) => (
             <div key={key}>
               <Key
@@ -138,7 +138,7 @@ export default function Keyboard() {
             </div>
           ))}
         </div>
-        <div className="flex w-full max-w-xl mt-2">
+        <div className="flex w-full max-w-xl sm:mt-2 mt-1 sm:justify-start justify-center">
           <Key value={"ENTER"} wide keyValue={"Enter"} handleKeyClick={handleKeyClick} />
           {thirdRow.map((letter, key) => (
             <div key={key}>
@@ -152,7 +152,7 @@ export default function Keyboard() {
               />
             </div>
           ))}
-          <Key value={<img src={`${theme === 'light' ? deleteIconLight : deleteIconDark}`} />} keyValue={"Delete"} wide handleKeyClick={handleKeyClick} />
+          <Key value={<img src={`${theme === "light" ? deleteIconLight : deleteIconDark}`} />} keyValue={"Delete"} wide handleKeyClick={handleKeyClick} />
         </div>
       </div>
     </div>

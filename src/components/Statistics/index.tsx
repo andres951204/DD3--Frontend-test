@@ -24,7 +24,7 @@ export default function Statistics() {
                 <div className="text-xl mt-4">Victorias</div>
               </div>
               {gameOver && !winner && (
-                <div className=" col-span-3 text-center text-xl">
+                <div className="col-span-3 text-center text-xl">
                   La palabra era: <span className="font-bold uppercase">{lastWord}</span>
                 </div>
               )}

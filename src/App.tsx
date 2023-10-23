@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header from "./components/Header";
 import Instructions from "./components/Instructions";
 import Keyboard from "./components/Keyboard";
@@ -10,19 +9,18 @@ import { UserProvider } from "./context/User/UserContext";
 import Container from "./components/Container";
 
 function App() {
-  const [showInstructions, setShowInstructions] = useState(false);
 
   return (
     <ThemeProvider>
       <UserProvider>
         <Container>
-          <Header setShowInstructions={setShowInstructions} />
+          <Header />
           <BoardProvider>
             <LettersBoard />
             <Keyboard />
             <Statistics />
           </BoardProvider>
-          <Instructions showInstructions={showInstructions} setShowInstructions={setShowInstructions} />
+          <Instructions />
         </Container>
       </UserProvider>
     </ThemeProvider>

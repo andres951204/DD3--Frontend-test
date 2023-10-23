@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import ThemeSwitch from "../ThemeSwitch";
-import { HeaderInterface } from "./types";
 import { UserContext } from "../../context/User/UserContext";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 
-export default function Header({ setShowInstructions }: HeaderInterface) {
-  const { setShowStatistics } = useContext(UserContext);
+export default function Header() {
+  const { setShowStatistics,setShowInstructions } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
 
   const statisticsIcon = "statistics.png";
@@ -13,8 +12,8 @@ export default function Header({ setShowInstructions }: HeaderInterface) {
 
   return (
     <>
-      <div className={`${theme === "light" ? "bg-gray-100" : "bg-dark-palette-components"} p-7 flex justify-between items-center w-full max-w-2xl rounded-2xl`}>
-        <div className="w-1/4">
+      <div className={`${theme === "light" ? "bg-gray-100" : "bg-dark-palette-components"} p-7 flex justify-between items-center w-full max-w-xl md:max-w-2xl rounded-2xl`}>
+        <div className="w-1/3">
           <img
             src="instructions.png"
             onClick={() => setShowInstructions(true)}
@@ -25,10 +24,15 @@ export default function Header({ setShowInstructions }: HeaderInterface) {
             title="Instrucciones"
           />
         </div>
-        <div className="w-1/2 justify-center">
-          <h1 className={` ${theme === "light" ? "text-[#202537]" : "text-[#DADCE0]"} font-semibold text-center text-4xl tracking-widest`}>WORDLE</h1>
+        <div className="w-1/3 justify-center">
+          <h1
+            className={` ${theme === "light" ? "text-[#202537]" : "text-[#DADCE0]"} 
+          font-semibold text-center text-xl sm:text-4xl tracking-widest`}
+          >
+            WORDLE
+          </h1>
         </div>
-        <div className="flex items-center justify-end w-1/4">
+        <div className="flex items-center justify-end w-1/3">
           <img
             src={theme === "light" ? statisticsIcon : statisticsIconDark}
             alt="Mostrar estadisticas"
