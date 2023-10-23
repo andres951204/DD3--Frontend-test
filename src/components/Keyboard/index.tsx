@@ -8,6 +8,8 @@ const firstRow = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
 const secondRow = ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ñ"];
 const thirdRow = ["z", "x", "c", "v", "b", "n", "m"];
 
+const timerMinutes = 1 * 10 * 1000;
+
 export default function Keyboard() {
   const { board, currentPosition, setCurrentPosition, wordsBank, currentWord, inWordLetters, inPositionLetters, notInWordLetters } = useContext(BoardContext);
   const { setWinner, setGameOver, victories, games, setVictories, setGames, setUpdateToken, setShowStatistics, setNextWordTime, gameOver, setLastWord } = useContext(UserContext);
@@ -28,9 +30,9 @@ export default function Keyboard() {
       setWinner(true);
       setGameOver(true);
       setVictories(victories + 1);
-      setGames(games + 1);
       setShowStatistics(true);
-      setNextWordTime(Date.now() + 5 * 60 * 1000);
+      setGames(games + 1);
+      setNextWordTime(Date.now() + timerMinutes);
       setUpdateToken({
         update: true,
         lastWord: "",
@@ -42,7 +44,7 @@ export default function Keyboard() {
         setGames(games + 1);
         setShowStatistics(true);
         setLastWord(currentWord);
-        setNextWordTime(Date.now() + 5 * 60 * 1000);
+        setNextWordTime(Date.now() + timerMinutes);
         setUpdateToken({
           update: true,
           lastWord: currentWord,

@@ -16,7 +16,7 @@ export default function Timer() {
 
   useEffect(() => {
     if (seconds > 0) {
-      const newSeconds = Math.floor((nextWordTime - Date.now()) / 1000)
+      const newSeconds = Math.floor((nextWordTime - Date.now()) / 1000);
       timeout = setTimeout(() => {
         setSeconds(newSeconds);
       }, 1000);

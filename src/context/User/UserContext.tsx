@@ -70,6 +70,10 @@ export const UserProvider = ({ children }: ReactChildrenInterface) => {
       if (token.gameOver) {
         setShowStatistics(true);
       }
+      if(Date.now() > token.nextWordTime){
+        resetGame();
+        setUpdateToken({lastWord:'', update: true})
+      }
     }
   }, []);
 
