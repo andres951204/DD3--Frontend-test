@@ -1,27 +1,30 @@
-# React + TypeScript + Vite
+# Información sobre la app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicación simula el famoso juego Wordle. Esta implementada en:
 
-Currently, two official plugins are available:
+- TypeScript
+- ReactJs
+- TailwindCss.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+La aplicación implementa:
 
-## Expanding the ESLint configuration
+### Contextos
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Para el manejo de estados relevantes a nivel global
 
-- Configure the top-level `parserOptions` property like this:
+### Types
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+Tipos detallados para sus componentes
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Diseño responsive
+
+El proyecto soporta resoluciones desde **360px** para abarcar la mayor cantidad de dispositivos posibles
+>Información obtenida de [gs.statcounter.com](https://gs.statcounter.com/screen-resolution-stats/mobile/worldwide)
+
+### Modo oscuro
+
+Cambios en todos los colores del sitio lo que permite la reducción de la fatiga visual, el ahorro de energía y la mejora de la legibilidad.
+
+### Información persistente
+
+La aplicación soporta recargas de página, conservando un token almacenado en el **localStorage** para permitir al usuario conservar sus estadisticas.
