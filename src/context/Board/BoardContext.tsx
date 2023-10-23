@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useRef } from "react";
+import { createContext, useState, useEffect } from "react";
 import { ReactChildrenInterface } from "../../types";
 import { BoardContextInterface } from "./types";
 import { getWordsBank } from "../../services/wordsBank";
@@ -17,7 +17,8 @@ const currentPositionInitialState = {
 };
 
 const boardContextInitialState: BoardContextInterface = {
-  board: { current: boardInitialState },
+  board: boardInitialState,
+  setBoard: () => {},
   boardInitialState,
   currentPosition: currentPositionInitialState,
   setCurrentPosition: () => {},
@@ -29,18 +30,13 @@ const boardContextInitialState: BoardContextInterface = {
   setInPositionLetters: () => {},
   inWordLetters: [""],
   setInWordLetters: () => {},
+  resetBoard: () => {},
 };
 
 export const BoardContext = createContext(boardContextInitialState);
 
 export const BoardProvider = ({ children }: ReactChildrenInterface) => {
-  const board = useRef([
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-  ]);
+  const [board, setBoard] = useState(boardInitialState);
   const [currentPosition, setCurrentPosition] = useState(currentPositionInitialState);
   const [currentWord, setCurrentWord] = useState("");
   const [wordsBank, setWordsBank] = useState([""]);
@@ -57,10 +53,24 @@ export const BoardProvider = ({ children }: ReactChildrenInterface) => {
     });
   }, []);
 
+  const resetBoard = () => {
+    const newBoard = [];
+    for (let i = 0; i < 5; i++) {
+      newBoard[i] = ["", "", "", "", ""];
+    }
+    setBoard(newBoard);
+    setInPositionLetters([""]);
+    setInWordLetters([""]);
+    setNotInWordLetters([""]);
+    setCurrentWord(wordsBank[Math.floor(Math.random() * wordsBank.length)])
+    setCurrentPosition({ letterPosition: 0, row: 0 });
+  };
+
   return (
     <BoardContext.Provider
       value={{
         board,
+        setBoard,
         boardInitialState,
         currentPosition,
         setCurrentPosition,
@@ -72,6 +82,7 @@ export const BoardProvider = ({ children }: ReactChildrenInterface) => {
         setInPositionLetters,
         inWordLetters,
         setInWordLetters,
+        resetBoard,
       }}
     >
       {children}

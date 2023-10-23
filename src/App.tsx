@@ -20,9 +20,9 @@ function App() {
           <BoardProvider>
             <LettersBoard />
             <Keyboard />
+            <Statistics />
           </BoardProvider>
           <Instructions showInstructions={showInstructions} setShowInstructions={setShowInstructions} />
-          <Statistics />
         </Container>
       </UserProvider>
     </ThemeProvider>

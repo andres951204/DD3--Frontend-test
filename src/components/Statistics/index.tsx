@@ -1,12 +1,10 @@
 import { useContext } from "react";
 import Card from "../Card";
 import { UserContext } from "../../context/User/UserContext";
-import { BoardContext } from "../../context/Board/BoardContext";
 import Timer from "../Timer";
 
 export default function Statistics() {
-  const { games, victories, gameOver, winner, showStatistics, setShowStatistics } = useContext(UserContext)
-  const { currentWord } = useContext(BoardContext)
+  const { games, victories, gameOver, winner, showStatistics, setShowStatistics, lastWord } = useContext(UserContext)
 
   return (
     <>
@@ -24,7 +22,7 @@ export default function Statistics() {
                 <div className="text-xl mt-4">Victorias</div>
               </div>
               {gameOver && !winner && <div className=" col-span-3 text-center text-xl" >
-                La palabra era: <span className="font-bold uppercase">{currentWord}</span>
+                La palabra era: <span className="font-bold uppercase">{lastWord}</span>
               </div>}
               {gameOver && <div className="flex flex-col items-center col-span-3">
                 <div className="text-xl">SIGUIENTE PALABRA</div>

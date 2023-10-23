@@ -7,8 +7,8 @@ type CurrentPositionState = {
 };
 
 export interface BoardContextInterface {
-  board: {current: BoardState};
-  // setBoard: Dispatch<SetStateAction<BoardState>>;
+  board: BoardState;
+  setBoard: Dispatch<SetStateAction<BoardState>>;
   boardInitialState: BoardState;
   currentPosition: CurrentPositionState;
   setCurrentPosition: Dispatch<SetStateAction<CurrentPositionState>>;
@@ -20,4 +20,5 @@ export interface BoardContextInterface {
   setInWordLetters: Dispatch<SetStateAction<Array<string>>>;
   inPositionLetters: Array<string>;
   setInPositionLetters: Dispatch<SetStateAction<Array<string>>>;
+  resetBoard: () => void
 }

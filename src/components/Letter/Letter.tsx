@@ -10,8 +10,8 @@ export default function Letter({ letterPosition, row }: LetterInterface) {
 
   useEffect(() => {
     const validatePosition = () => {
-      const inPosition = board.current[row][letterPosition] === currentWord[letterPosition];
-      const inWord = !inPosition && board.current[row][letterPosition] !== "" && currentWord.includes(board.current[row][letterPosition]);
+      const inPosition = board[row][letterPosition] === currentWord[letterPosition];
+      const inWord = !inPosition && board[row][letterPosition] !== "" && currentWord.includes(board[row][letterPosition]);
 
       let bgColor = "";
       if (currentPosition.row > row) {
@@ -22,19 +22,19 @@ export default function Letter({ letterPosition, row }: LetterInterface) {
       setBgColor(bgColor);
 
       if (inPosition) {
-        if (inWordLetters.includes(board.current[row][letterPosition])) {
-          setInWordLetters((prev) => [...prev.filter((l) => l !== board.current[row][letterPosition])]);
+        if (inWordLetters.includes(board[row][letterPosition])) {
+          setInWordLetters((prev) => [...prev.filter((l) => l !== board[row][letterPosition])]);
         }
-        setInPositionLetters((prev) => [...prev, board.current[row][letterPosition]]);
+        setInPositionLetters((prev) => [...prev, board[row][letterPosition]]);
       } else if (inWord) {
-        setInWordLetters((prev) => [...prev, board.current[row][letterPosition]]);
-      } else if (!inPosition && !inWord && !notInWordLetters.includes(board.current[row][letterPosition])) {
-        setNotInWordLetters((prev) => [...prev, board.current[row][letterPosition]]);
+        setInWordLetters((prev) => [...prev, board[row][letterPosition]]);
+      } else if (!inPosition && !inWord && !notInWordLetters.includes(board[row][letterPosition])) {
+        setNotInWordLetters((prev) => [...prev, board[row][letterPosition]]);
       }
     };
 
     validatePosition();
   }, [currentPosition.row]);
 
-  return <div className={`w-[76px] h-[76px] mr-3  text-white capitalize ${bgColor} rounded-md flex justify-center items-center font-extrabold text-4xl`}>{board.current[row][letterPosition]}</div>;
+  return <div className={`w-[76px] h-[76px] mr-3  text-white capitalize ${bgColor} rounded-md flex justify-center items-center font-extrabold text-4xl`}>{board[row][letterPosition]}</div>;
 }

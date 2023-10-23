@@ -4,33 +4,26 @@ import { BoardContext } from "../../context/Board/BoardContext";
 
 let timeout: ReturnType<typeof setTimeout>;
 
-const COUNTDOWN_AMOUNT_TOTAL = 1 * 10;
+const COUNTDOWN_AMOUNT_TOTAL = 5 * 60;
+// const COUNTDOWN_AMOUNT_TOTAL = 5 * 2;
 
 export default function Timer() {
   const [seconds, setSeconds] = useState(COUNTDOWN_AMOUNT_TOTAL);
-  const { setGameOver, setShowStatistics, setUpdateToken } = useContext(UserContext);
-  const { board } = useContext(BoardContext);
-
+  const { resetBoard } = useContext(BoardContext);
+  const { resetGame, nextWordTime } = useContext(UserContext);
   const displaySeconds = seconds % 60;
   const displayMinutes = Math.floor(seconds / 60);
 
   useEffect(() => {
     if (seconds > 0) {
+      const newSeconds = Math.floor((nextWordTime - Date.now()) / 1000)
       timeout = setTimeout(() => {
-        setSeconds((state) => state - 1);
+        setSeconds(newSeconds);
       }, 1000);
     } else {
       clearTimeout(timeout);
-      setTimeout(() => {
-        for (let i = 0; i < 5; i++) {
-          // eslint-disable-next-line no-debugger
-          debugger
-          board.current[i] = ["A", "A", "A", "A", "A"];
-        }
-      }, 3000);
-      setGameOver(false);
-      setShowStatistics(false);
-      setUpdateToken(true);
+      resetGame();
+      resetBoard();
     }
   }, [seconds]);
 

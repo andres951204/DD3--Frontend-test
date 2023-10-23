@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction } from "react"
 export interface UserContextInterface {
     games: number,
     setGames: Dispatch<SetStateAction<number>>
-    nextWordTimer: Date,
-    setNextWordTimer: Dispatch<SetStateAction<Date>>
+    nextWordTime: number,
+    setNextWordTime: Dispatch<SetStateAction<number>>
     victories: number,
     setVictories: Dispatch<SetStateAction<number>>
     winner: boolean,
@@ -13,13 +13,20 @@ export interface UserContextInterface {
     setGameOver: Dispatch<SetStateAction<boolean>>,
     showStatistics: boolean,
     setShowStatistics: Dispatch<SetStateAction<boolean>>,
-    setUpdateToken: Dispatch<SetStateAction<boolean>>
+    setUpdateToken: Dispatch<SetStateAction<{
+        update: boolean,
+        lastWord: string
+    }>>,
+    resetGame: () => void,
+    lastWord: string,
+    setLastWord: Dispatch<SetStateAction<string>>
 }
 
 export interface TokenInterface {
     games: number,
-    nextWordTimer: Date,
+    nextWordTime: number,
     victories: number,
     winner: boolean,
     gameOver: boolean,
+    lastWord: string,
 }

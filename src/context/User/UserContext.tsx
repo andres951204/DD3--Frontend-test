@@ -7,8 +7,8 @@ const TOKEN_KEY = "wordle-game-token";
 const initialState: UserContextInterface = {
   games: 0,
   setGames: () => {},
-  nextWordTimer: new Date(),
-  setNextWordTimer: () => {},
+  nextWordTime: 0,
+  setNextWordTime: () => {},
   victories: 0,
   setVictories: () => {},
   winner: false,
@@ -17,7 +17,10 @@ const initialState: UserContextInterface = {
   setGameOver: () => {},
   showStatistics: false,
   setShowStatistics: () => {},
-  setUpdateToken: () => {}
+  setUpdateToken: () => ({ update: false, lastWord: "" }),
+  resetGame: () => {},
+  lastWord: "",
+  setLastWord: () => {}
 };
 
 export const UserContext = createContext(initialState);
@@ -25,25 +28,30 @@ export const UserContext = createContext(initialState);
 export const UserProvider = ({ children }: ReactChildrenInterface) => {
   const [games, setGames] = useState(0);
   const [victories, setVictories] = useState(0);
-  const [nextWordTimer, setNextWordTimer] = useState(new Date());
+  const [nextWordTime, setNextWordTime] = useState(0);
   const [winner, setWinner] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
-  const [updateToken, setUpdateToken] = useState(false);
+  const [lastWord, setLastWord] = useState("");
+  const [updateToken, setUpdateToken] = useState({
+    update: false,
+    lastWord: "",
+  });
 
   useEffect(() => {
-    if (updateToken) {
+    if (updateToken.update) {
       const newToken: TokenInterface = {
         games,
         victories,
         gameOver,
         winner,
-        nextWordTimer,
+        nextWordTime,
+        lastWord: updateToken.lastWord,
       };
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
-      setUpdateToken(false)
+      setUpdateToken({ update: false, lastWord: '' });
     }
-  }, [updateToken]);
+  }, [updateToken.update]);
 
   useEffect(() => {
     const currentToken = localStorage.getItem(TOKEN_KEY);
@@ -52,10 +60,19 @@ export const UserProvider = ({ children }: ReactChildrenInterface) => {
       setGames(token.games);
       setVictories(token.victories);
       setGameOver(token.gameOver);
-      setNextWordTimer(token.nextWordTimer);
+      setNextWordTime(token.nextWordTime);
       setWinner(token.winner);
+      setLastWord(token.lastWord);
+      if (token.gameOver) {
+        setShowStatistics(true);
+      }
     }
   }, []);
+
+  const resetGame = () => {
+    setGameOver(false);
+    setShowStatistics(false);
+  };
 
   return (
     <UserContext.Provider
@@ -64,15 +81,18 @@ export const UserProvider = ({ children }: ReactChildrenInterface) => {
         setGames,
         victories,
         setVictories,
-        nextWordTimer,
-        setNextWordTimer,
+        nextWordTime,
+        setNextWordTime,
         winner,
         setWinner,
         gameOver,
         setGameOver,
         showStatistics,
         setShowStatistics,
-        setUpdateToken
+        setUpdateToken,
+        resetGame,
+        lastWord,
+        setLastWord
       }}
     >
       {children}

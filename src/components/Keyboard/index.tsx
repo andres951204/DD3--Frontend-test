@@ -10,18 +10,18 @@ const thirdRow = ["z", "x", "c", "v", "b", "n", "m"];
 
 export default function Keyboard() {
   const { board, currentPosition, setCurrentPosition, wordsBank, currentWord, inWordLetters, inPositionLetters, notInWordLetters } = useContext(BoardContext);
-  const { setWinner, setGameOver, victories, games, setVictories, setGames, setUpdateToken, setShowStatistics } = useContext(UserContext);
-  const {theme} = useContext(ThemeContext)
+  const { setWinner, setGameOver, victories, games, setVictories, setGames, setUpdateToken, setShowStatistics, setNextWordTime, gameOver, setLastWord } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
 
   const handleSubmit = () => {
     if (currentPosition.letterPosition !== 5) return;
 
-    const currentGuess = board.current[currentPosition.row].join("");
+    const currentGuess = board[currentPosition.row].join("");
 
     if (wordsBank.includes(currentGuess)) {
       setCurrentPosition({ row: currentPosition.row + 1, letterPosition: 0 });
     } else {
-      alert("Palabra no encontrada");
+      return alert("Palabra no encontrada");
     }
 
     if (currentGuess === currentWord) {
@@ -30,45 +30,68 @@ export default function Keyboard() {
       setVictories(victories + 1);
       setGames(games + 1);
       setShowStatistics(true);
-      setUpdateToken(true);
+      setNextWordTime(Date.now() + 5 * 60 * 1000);
+      setUpdateToken({
+        update: true,
+        lastWord: "",
+      });
+    } else {
+      if (currentPosition.row === 4) {
+        setWinner(false);
+        setGameOver(true);
+        setGames(games + 1);
+        setShowStatistics(true);
+        setLastWord(currentWord);
+        setNextWordTime(Date.now() + 5 * 60 * 1000);
+        setUpdateToken({
+          update: true,
+          lastWord: currentWord,
+        });
+      }
     }
   };
 
   const handleDelete = () => {
     if (currentPosition.letterPosition === 0) return;
-    board.current[currentPosition.row][currentPosition.letterPosition - 1] = "";
+    board[currentPosition.row][currentPosition.letterPosition - 1] = "";
     setCurrentPosition({ ...currentPosition, letterPosition: currentPosition.letterPosition - 1 });
   };
 
   const handleLetterClick = (kValue: string) => {
-    board.current[currentPosition.row][currentPosition.letterPosition] = kValue;
+    board[currentPosition.row][currentPosition.letterPosition] = kValue;
     setCurrentPosition({ ...currentPosition, letterPosition: currentPosition.letterPosition + 1 });
   };
 
   const handleLetterPress = (kValue: string) => {
-    const regex = new RegExp(/^[A-z-ñ]{1}$/);
-    if (!regex.test(kValue)) return;
-    handleLetterClick(kValue);
+    if (!gameOver) {
+      const regex = new RegExp(/^[A-z-ñ]{1}$/);
+      if (!regex.test(kValue)) return;
+      handleLetterClick(kValue);
+    }
   };
 
   const handleKeyClick = (keyValue: string) => {
-    if (keyValue === "Enter") {
-      handleSubmit();
-    } else if (keyValue === "Delete") {
-      handleDelete();
-    } else if (currentPosition.letterPosition < 5 && currentPosition.row < 5) {
-      handleLetterClick(keyValue);
+    if (!gameOver) {
+      if (keyValue === "Enter") {
+        handleSubmit();
+      } else if (keyValue === "Delete") {
+        handleDelete();
+      } else if (currentPosition.letterPosition < 5 && currentPosition.row < 5) {
+        handleLetterClick(keyValue);
+      }
     }
   };
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        handleSubmit();
-      } else if (e.key === "Backspace") {
-        handleDelete();
-      } else if (currentPosition.letterPosition < 5 && currentPosition.row < 5) {
-        handleLetterPress(e.key.toLocaleLowerCase());
+      if (!gameOver) {
+        if (e.key === "Enter") {
+          handleSubmit();
+        } else if (e.key === "Backspace") {
+          handleDelete();
+        } else if (currentPosition.letterPosition < 5 && currentPosition.row < 5) {
+          handleLetterPress(e.key.toLocaleLowerCase());
+        }
       }
     },
     [currentPosition.letterPosition, currentPosition.row]
@@ -82,7 +105,7 @@ export default function Keyboard() {
   }, [handleKeyPress]);
 
   return (
-    <div className={`flex justify-center mt-14 ${theme === 'light'? 'bg-gray-100' : 'bg-dark-palette-components'} pl-5 pt-8 pb-9 rounded-2xl w-full max-w-[638px]`}>
+    <div className={`flex justify-center mt-14 ${theme === "light" ? "bg-gray-100" : "bg-dark-palette-components"} pl-5 pt-8 pb-9 rounded-2xl w-full max-w-[638px]`}>
       <div>
         <div className="flex w-full max-w-xl pl-8">
           {firstRow.map((letter, key) => (
