@@ -1,10 +1,10 @@
-// import { useContext } from "react";
+import { useContext } from "react";
 import { KeyInterface } from "./types";
-// import { ThemeContext } from "../../context/Theme/ThemeContext";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 
 export default function Key({ value, keyValue, wide = false, handleKeyClick, inPosition, inWord, notInWord }: KeyInterface) {
 
-  // const {theme} = useContext(ThemeContext)
+  const {theme} = useContext(ThemeContext)
 
   
   const bgColor = inPosition
@@ -13,7 +13,7 @@ export default function Key({ value, keyValue, wide = false, handleKeyClick, inP
     ? "bg-keyboard-in-word text-white"
     : notInWord
     ? "bg-keyboard-not-in-word text-white"
-    : "bg-keyboard-clean text-keyboard-character"
+    : theme === 'light' ? "bg-keyboard-clean text-keyboard-character" : "bg-keyboard-dark-clean text-white"
 
   return (
     <>

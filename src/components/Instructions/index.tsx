@@ -69,7 +69,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
           <div
             key={key}
             className={`w-[50px] h-[50px] 
-            ${letter.state ? `bg-letter-box-${letter.state}` :  theme === ' light' ? "border border-black" : "border border-white"}
+            ${letter.state ? `bg-letter-box-${letter.state}` :  theme === 'light' ? "border border-black" : "border border-white"}
             cursor-pointer rounded-md flex justify-center 
             items-center font-extrabold text-2xl`}
           >

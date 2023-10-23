@@ -104,6 +104,9 @@ export default function Keyboard() {
     };
   }, [handleKeyPress]);
 
+  const deleteIconLight = 'delete-icon-light.png'
+  const deleteIconDark = 'delete-icon-dark.png'
+
   return (
     <div className={`flex justify-center mt-14 ${theme === "light" ? "bg-gray-100" : "bg-dark-palette-components"} pl-5 pt-8 pb-9 rounded-2xl w-full max-w-[638px]`}>
       <div>
@@ -149,7 +152,7 @@ export default function Keyboard() {
               />
             </div>
           ))}
-          <Key value={<img src="/delete-icon.png" />} keyValue={"Delete"} wide handleKeyClick={handleKeyClick} />
+          <Key value={<img src={`${theme === 'light' ? deleteIconLight : deleteIconDark}`} />} keyValue={"Delete"} wide handleKeyClick={handleKeyClick} />
         </div>
       </div>
     </div>

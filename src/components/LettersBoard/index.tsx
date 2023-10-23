@@ -1,4 +1,4 @@
-import Letter from "../Letter/Letter";
+import Letter from "./Letter/Letter";
 
 export default function LettersBoard() {
 
