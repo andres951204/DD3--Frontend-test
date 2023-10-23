@@ -8,14 +8,21 @@ export default {
           "in-position": "#6AAA64",
           "in-word": "#CEB02C",
           "not-in-word": "#939B9F",
-          "empty": "#DADDDE"
+          "empty": "#DADDDE",
+          "dark-empty": "#3C4150",
+          "dark-not-in-word": "#818181",
         },
         "keyboard": {
           "in-position": "#6AAA64",
           "in-word": "#CEB02C",
           "not-in-word": "#818181",
           "clean": "#D3D6DA",
-          "character": "#56575E"
+          "character": "#56575E",
+          "dark-clean": "#565F7E",
+        },
+        "dark-palette": {
+          main: "#262B3C",
+          components: "#2B3041"
         }
       },
     },

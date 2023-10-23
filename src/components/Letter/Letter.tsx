@@ -1,28 +1,40 @@
 import { LetterInterface } from "./type";
 import { BoardContext } from "./../../context/Board/BoardContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 
 export default function Letter({ letterPosition, row }: LetterInterface) {
   const { board, currentWord, currentPosition, inWordLetters, notInWordLetters, setInWordLetters, setInPositionLetters, setNotInWordLetters } = useContext(BoardContext);
-  const letter = board[row][letterPosition];
-
-  const inPosition = letter === currentWord[letterPosition];
-  const inWord = !inPosition && letter !== "" && currentWord.includes(letter);
-
-  const bgColor = currentPosition.row > row && (inPosition ? "bg-letter-box-in-position" : inWord ? "bg-letter-box-in-word" : "bg-letter-box-not-in-word");
+  const { theme } = useContext(ThemeContext);
+  const [bgColor, setBgColor] = useState("");
 
   useEffect(() => {
-    if (inPosition) {
-      if (inWordLetters.includes(letter)) {
-        setInWordLetters((prev) => [...prev.filter((l) => l !== letter)]);
+    const validatePosition = () => {
+      const inPosition = board.current[row][letterPosition] === currentWord[letterPosition];
+      const inWord = !inPosition && board.current[row][letterPosition] !== "" && currentWord.includes(board.current[row][letterPosition]);
+
+      let bgColor = "";
+      if (currentPosition.row > row) {
+        bgColor = inPosition ? "bg-letter-box-in-position" : inWord ? "bg-letter-box-in-word" : "bg-letter-box-not-in-word";
+      } else {
+        bgColor = theme === "light" ? "bg-letter-box-empty" : "bg-letter-box-dark-empty";
       }
-      setInPositionLetters((prev) => [...prev, letter]);
-    } else if (inWord) {
-      setInWordLetters((prev) => [...prev, letter]);
-    } else if (!inPosition && !inWord && !notInWordLetters.includes(letter)) {
-      setNotInWordLetters((prev) => [...prev, letter]);
-    }
+      setBgColor(bgColor);
+
+      if (inPosition) {
+        if (inWordLetters.includes(board.current[row][letterPosition])) {
+          setInWordLetters((prev) => [...prev.filter((l) => l !== board.current[row][letterPosition])]);
+        }
+        setInPositionLetters((prev) => [...prev, board.current[row][letterPosition]]);
+      } else if (inWord) {
+        setInWordLetters((prev) => [...prev, board.current[row][letterPosition]]);
+      } else if (!inPosition && !inWord && !notInWordLetters.includes(board.current[row][letterPosition])) {
+        setNotInWordLetters((prev) => [...prev, board.current[row][letterPosition]]);
+      }
+    };
+
+    validatePosition();
   }, [currentPosition.row]);
 
-  return <div className={`w-[76px] h-[76px] transition-all mr-3 ${bgColor} text-white capitalize bg-letter-box-empty rounded-md flex justify-center items-center font-extrabold text-4xl`}>{letter}</div>;
+  return <div className={`w-[76px] h-[76px] mr-3  text-white capitalize ${bgColor} rounded-md flex justify-center items-center font-extrabold text-4xl`}>{board.current[row][letterPosition]}</div>;
 }

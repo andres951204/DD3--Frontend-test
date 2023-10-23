@@ -7,6 +7,7 @@ import LettersBoard from "./components/LettersBoard";
 import { BoardProvider } from "./context/Board/BoardContext";
 import Statistics from "./components/Statistics";
 import { UserProvider } from "./context/User/UserContext";
+import Container from "./components/Container";
 
 function App() {
   const [showInstructions, setShowInstructions] = useState(false);
@@ -14,7 +15,7 @@ function App() {
   return (
     <ThemeProvider>
       <UserProvider>
-        <div className="flex flex-col justify-center items-center pt-8 select-none">
+        <Container>
           <Header setShowInstructions={setShowInstructions} />
           <BoardProvider>
             <LettersBoard />
@@ -22,7 +23,7 @@ function App() {
           </BoardProvider>
           <Instructions showInstructions={showInstructions} setShowInstructions={setShowInstructions} />
           <Statistics />
-        </div>
+        </Container>
       </UserProvider>
     </ThemeProvider>
   );

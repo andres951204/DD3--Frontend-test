@@ -7,8 +7,8 @@ type CurrentPositionState = {
 };
 
 export interface BoardContextInterface {
-  board: BoardState;
-  setBoard: Dispatch<SetStateAction<BoardState>>;
+  board: {current: BoardState};
+  // setBoard: Dispatch<SetStateAction<BoardState>>;
   boardInitialState: BoardState;
   currentPosition: CurrentPositionState;
   setCurrentPosition: Dispatch<SetStateAction<CurrentPositionState>>;

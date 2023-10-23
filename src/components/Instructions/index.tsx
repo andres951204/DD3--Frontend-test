@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { Letter } from "../../types";
 import Card from "../Card";
 import { DummyLettersBoxInterface, InstructionsInterface } from "./types";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 
 const firstWord: Array<Letter> = [
   {
@@ -58,6 +60,8 @@ const thirdWord: Array<Letter> = [
 ];
 
 export default function Instructions({ showInstructions, setShowInstructions }: InstructionsInterface) {
+  const { theme } = useContext(ThemeContext);
+
   const DummyLetterBox = ({ word }: DummyLettersBoxInterface) => {
     return (
       <div className="flex justify-between w-[310px]">
@@ -65,7 +69,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
           <div
             key={key}
             className={`w-[50px] h-[50px] 
-            ${letter.state ? `bg-letter-box-${letter.state}` : "border border-black"}
+            ${letter.state ? `bg-letter-box-${letter.state}` :  theme === ' light' ? "border border-black" : "border border-white"}
             cursor-pointer rounded-md flex justify-center 
             items-center font-extrabold text-2xl`}
           >
@@ -78,7 +82,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
 
   return (
     <div className={`${showInstructions ? "block" : "hidden"}`}>
-      <div className={`absolute -translate-x-2/4 -translate-y-2/4 top-2/4 left-2/4 z-20`}>
+      <div className={`absolute -translate-x-2/4 -translate-y-2/4 top-2/4 left-2/4 z-20 ${theme === "light" ? "text-black" : "text-white"}`}>
         <Card>
           <h1 className="text-3xl font-extrabold text-center">Cómo jugar</h1>
           <div className="mt-2 text-base">
@@ -117,7 +121,7 @@ export default function Instructions({ showInstructions, setShowInstructions }: 
           </button>
         </Card>
       </div>
-      <div className="absolute top-0 left-0 opacity-80 bg-white h-screen w-screen z-10"></div>
+      <div className={`absolute top-0 left-0 opacity-80 ${theme === 'light' ? 'bg-white' : 'bg-dark-palette-main'} h-screen w-screen z-10`}></div>
     </div>
   );
 }

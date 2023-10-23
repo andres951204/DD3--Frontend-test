@@ -2,19 +2,21 @@ import { useContext, useEffect, useCallback } from "react";
 import Key from "../Key";
 import { BoardContext } from "../../context/Board/BoardContext";
 import { UserContext } from "../../context/User/UserContext";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 
 const firstRow = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
 const secondRow = ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ñ"];
 const thirdRow = ["z", "x", "c", "v", "b", "n", "m"];
 
 export default function Keyboard() {
-  const { board, setBoard, currentPosition, setCurrentPosition, wordsBank, currentWord, inWordLetters, inPositionLetters, notInWordLetters } = useContext(BoardContext);
+  const { board, currentPosition, setCurrentPosition, wordsBank, currentWord, inWordLetters, inPositionLetters, notInWordLetters } = useContext(BoardContext);
   const { setWinner, setGameOver, victories, games, setVictories, setGames, setUpdateToken, setShowStatistics } = useContext(UserContext);
+  const {theme} = useContext(ThemeContext)
 
   const handleSubmit = () => {
     if (currentPosition.letterPosition !== 5) return;
 
-    const currentGuess = board[currentPosition.row].join("");
+    const currentGuess = board.current[currentPosition.row].join("");
 
     if (wordsBank.includes(currentGuess)) {
       setCurrentPosition({ row: currentPosition.row + 1, letterPosition: 0 });
@@ -34,16 +36,12 @@ export default function Keyboard() {
 
   const handleDelete = () => {
     if (currentPosition.letterPosition === 0) return;
-    const newBoard = [...board];
-    newBoard[currentPosition.row][currentPosition.letterPosition - 1] = "";
-    setBoard(newBoard);
+    board.current[currentPosition.row][currentPosition.letterPosition - 1] = "";
     setCurrentPosition({ ...currentPosition, letterPosition: currentPosition.letterPosition - 1 });
   };
 
   const handleLetterClick = (kValue: string) => {
-    const newBoard = [...board];
-    newBoard[currentPosition.row][currentPosition.letterPosition] = kValue;
-    setBoard(newBoard);
+    board.current[currentPosition.row][currentPosition.letterPosition] = kValue;
     setCurrentPosition({ ...currentPosition, letterPosition: currentPosition.letterPosition + 1 });
   };
 
@@ -78,14 +76,13 @@ export default function Keyboard() {
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
-    console.log(currentWord);
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress]);
 
   return (
-    <div className="flex justify-center mt-14 bg-gray-100 pl-5 pt-8 pb-9 rounded-2xl w-full max-w-[638px]">
+    <div className={`flex justify-center mt-14 ${theme === 'light'? 'bg-gray-100' : 'bg-dark-palette-components'} pl-5 pt-8 pb-9 rounded-2xl w-full max-w-[638px]`}>
       <div>
         <div className="flex w-full max-w-xl pl-8">
           {firstRow.map((letter, key) => (
